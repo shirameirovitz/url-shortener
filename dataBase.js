@@ -1,9 +1,11 @@
+const fs = require("fs");
+
 class Url {
-  constructor(originUrl) {
-    this.redirectCount = 0;
-    this.originUrl = originUrl;
-    this.shortUrlId = Date.now();
-    this.createDate = new Date().toISOString().slice(0, 19).replace("T", " ");
+  constructor(originalUrl, shortUrl) {
+    this.originalUrl = originalUrl;
+    this.shortUrl = shortUrl;
+    this.count = 0;
+    this.date = new Date().toISOString().slice(0, 19).replace("T", " ");
   }
 }
 
@@ -11,8 +13,15 @@ class DataBase {
   constructor() {
     this.urls = [];
   }
-  addUrl(originalUrl, shortUrl) {
-    this.urls.push(new Url(originalUrl, shortUrl));
+  addUrl(currentUrl) {
+    for (let i = 0; i < this.urls.length; i++) {
+      if (this.urls[i].originalUrl === currentUrl) {
+        this.urls[i].count += 1;
+        return this.urls[i].shortUrl;
+      }
+    }
+    let newUrl = this.urls.push(new Url(currentUrl, shortUrl));
+    return newUrl.shortUrl;
   }
   deleteUrl(originalUrl) {
     for (let i = 0; i < this.urls.length; i++) {
@@ -21,6 +30,6 @@ class DataBase {
       }
     }
   }
-}
-module.exports = DataBase;
-module.exports = Url;
+  
+module.exports = { DataBase, Url };
+
