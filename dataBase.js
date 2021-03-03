@@ -1,42 +1,67 @@
-const fs = require("fs");
+const fs = require("fs").promises;
+const shortid = require("shortid");
 
-class Url {
-  constructor(originalUrl, shortUrl) {
+class Item {
+  constructor(originalUrl) {
     this.originalUrl = originalUrl;
-    this.shortUrl = shortUrl;
+    this.shortUrl = shortid.generate();
     this.count = 0;
     this.date = new Date().toISOString().slice(0, 19).replace("T", " ");
   }
 }
 
 class DataBase {
-  constructor() {
-    this.urls = [];
+  static items = [];
+
+  static async readAllData() {
+    const data = await fs.readFile(
+      "./dataBase/dataBase.json",
+      "utf8",
+      (err) => {
+        if (err) return;
+      }
+    );
+    this.items = JSON.parse(data);
   }
-  addUrl(currentUrl) {
-    for (let i = 0; i < this.urls.length; i++) {
-      if (this.urls[i].originalUrl === currentUrl) {
-        this.urls[i].count += 1;
-        return this.urls[i].shortUrl;
+
+  static async addUrl(url) {
+    await this.readAllData();
+
+    for (let item of this.items) {
+      if (item.originalUrl === url) {
+        return item.shortUrl;
       }
     }
-    let newUrl = this.urls.push(new Url(currentUrl, shortUrl));
-    return newUrl.shortUrl;
+
+    let newItem = new Item(url);
+    this.items.push(newItem);
+    fs.writeFile(
+      "./dataBase/dataBase.json",
+      JSON.stringify(this.items, null, 4)
+    );
+
+    return newItem.shortUrl;
   }
-  deleteUrl(originalUrl) {
+  static deleteUrl(originalUrl) {
     for (let i = 0; i < this.urls.length; i++) {
       if (this.urls[i].originalUrl === originalUrl) {
         this.urls.splice(i, 1);
       }
     }
   }
-  findOriginalUrl(shortUrl) {
-    for (let i = 0; i < this.urls.length; i++) {
-      if (this.urls[i].shortUrl === shortUrl) {
-        return this.urls[i].originalUrl;
+
+  static async findOriginalUrl(shortUrl) {
+    await this.readAllData();
+
+    for (let item of this.items) {
+      if (item.shortUrl == shortUrl) {
+        item.count += 1;
+        console.log("FIND ORIGINAL URL METHOD");
+        console.log(item.originalUrl);
+        return item.originalUrl;
       }
     }
   }
 }
 
-module.exports = { DataBase, Url };
+module.exports = DataBase;
