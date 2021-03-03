@@ -30,15 +30,13 @@ class DataBase {
       }
     }
   }
-  // checkIfUrlExists(currentUrl) {
-  //   for (let i = 0; i < this.urls.length; i++) {
-  //     if (this.urls[i].originalUrl === currentUrl) {
-  //       this.urls[i].count += 1;
-  //       return this.urls[i].shortUrl;
-  //     }
-  //   }
-  //   return false;
-  // }
+  findOriginalUrl(shortUrl) {
+    for (let i = 0; i < this.urls.length; i++) {
+      if (this.urls[i].shortUrl === shortUrl) {
+        return this.urls[i].originalUrl;
+      }
+    }
+  }
 }
 
 module.exports = { DataBase, Url };
