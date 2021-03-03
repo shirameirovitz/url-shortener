@@ -1,11 +1,11 @@
 const { Router } = require("express");
-const shorturl = require("./shorturl");
-const statistic = require("./statistics");
+const { router } = require("./shorturl");
+//const statistic = require("./statistics");
 
 const api = Router();
 
-api.use("/shorturl", shorturl);
-api.use("/statistic", statistic);
+api.use("/shorturl", router);
+//api.use("/statistic", statistic);
 api.use("*", (req, res) => {
   res.status(404) / send({ message: "Page Not Found" });
 });
