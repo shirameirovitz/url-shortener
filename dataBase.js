@@ -1,27 +1,26 @@
 const fs = require("fs");
-
 class Url {
   constructor(originalUrl, shortUrl) {
     this.originalUrl = originalUrl;
-    this.shortUrl = shortUrl;
+    this.date = dateSql();
     this.count = 0;
-    this.date = new Date().toISOString().slice(0, 19).replace("T", " ");
+    this.shortUrl = shortUrl;
   }
+}
+
+function dateSql() {
+  let date = new Date();
+  date =
+    date.toISOString().split("T")[0] + " " + date.toTimeString().split(" ")[0];
+  return date;
 }
 
 class DataBase {
   constructor() {
     this.urls = [];
   }
-  addUrl(currentUrl) {
-    for (let i = 0; i < this.urls.length; i++) {
-      if (this.urls[i].originalUrl === currentUrl) {
-        this.urls[i].count += 1;
-        return this.urls[i].shortUrl;
-      }
-    }
-    let newUrl = this.urls.push(new Url(currentUrl, shortUrl));
-    return newUrl.shortUrl;
+  addUrl(originalUrl, shortUrl) {
+    this.urls.push(new Url(originalUrl, shortUrl));
   }
   deleteUrl(originalUrl) {
     for (let i = 0; i < this.urls.length; i++) {
@@ -30,6 +29,7 @@ class DataBase {
       }
     }
   }
-  
-module.exports = { DataBase, Url };
+}
 
+module.exports = DataBase;
+module.exports = Url;
