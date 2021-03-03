@@ -1,8 +1,3 @@
-const fsPromises = require("fs").promises;
-const shortId = require("shortid");
-
-const url = {};
-
 class Url {
   constructor(originUrl) {
     this.redirectCount = 0;
@@ -12,5 +7,20 @@ class Url {
   }
 }
 
-
+class DataBase {
+  constructor() {
+    this.urls = [];
+  }
+  addUrl(originalUrl, shortUrl) {
+    this.urls.push(new Url(originalUrl, shortUrl));
+  }
+  deleteUrl(originalUrl) {
+    for (let i = 0; i < this.urls.length; i++) {
+      if (this.urls[i].originalUrl === originalUrl) {
+        this.urls.splice(i, 1);
+      }
+    }
+  }
+}
+module.exports = DataBase;
 module.exports = Url;
