@@ -37,10 +37,14 @@ describe("GET route", () => {
     // is the status code 200
     expect(response.status).toBe(302);
   });
-  it("should an error with status 404 for not found url", async () => {
+  it("should return an error with status 400 for not found id", async () => {
     const response = await request(app).get("/1111");
 
     //is the status 404
+    expect(response.status).toBe(400);
+  });
+  it("should return an error with status code 404 for not found main url", async () => {
+    const response = await request(app).get("/iews/index.html");
     expect(response.status).toBe(404);
   });
 });

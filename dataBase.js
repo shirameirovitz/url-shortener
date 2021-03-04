@@ -25,11 +25,8 @@ class DataBase {
   }
   static async addUrl(url) {
     await this.readAllData();
-    console.log("a");
     for (let item of this.items) {
-      console.log("c");
       if (item.originalUrl === url) {
-        console.log("b");
         return item.shortUrl;
       }
     }
@@ -39,7 +36,6 @@ class DataBase {
       "./dataBase/dataBase.json",
       JSON.stringify(this.items, null, 4)
     );
-    console.log("d");
     return newItem.shortUrl;
   }
   static deleteUrl(originalUrl) {
@@ -63,7 +59,7 @@ class DataBase {
         return item.originalUrl;
       }
     }
-    return false
+    return false;
   }
 }
 
