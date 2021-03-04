@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "jest supertest.test.js --verbose"
+    "test": "jest --verbose"
   },
   "dependencies": {
     "@types/jest": "^26.0.20",
