@@ -4,8 +4,6 @@ const fs = require("fs");
 const { items } = require("../dataBase");
 
 describe("POST route", () => {
-  //   const originalUrl = "https://www.youtube.com/";
-
   it("should post a new short id successfully", async () => {
     const response = await request(app)
       .post("/api/shorturl/new")
@@ -13,6 +11,14 @@ describe("POST route", () => {
       .send({ url: "https://www.youtube.com/" });
 
     expect(response.status).toBe(200);
+  });
+  it("should return an error for invalid url", async () => {
+    const response = await request(app)
+      .post("/api/shorturl/new")
+      .type("form")
+      .send({ url: "6" });
+
+    expect(response.status).toBe(400);
   });
 });
 
@@ -25,8 +31,6 @@ describe("GET route", () => {
       date: "2021-03-04 10:08:17",
     },
   ];
-  const expectedShortIdError = "short ID cannot be found";
-
   it("should return a OriginalUrl by a short Id", async () => {
     const response = await request(app).get("/qj8VT-kKy");
 
