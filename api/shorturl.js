@@ -1,5 +1,4 @@
 const express = require("express");
-const shortid = require("shortid");
 const validUrl = require("valid-url");
 const DataBase = require("../dataBase.js");
 
@@ -24,12 +23,6 @@ router.post("/new", async (request, response) => {
         .json({ message: "Internal Server Error!", error: `${e}` });
     }
   }
-});
-
-router.get("/:id", async (request, response) => {
-  const { id } = request.params;
-  let originalUrl = await DataBase.findOriginalUrl(id);
-  response.redirect(`${originalUrl}`);
 });
 
 module.exports = { router };

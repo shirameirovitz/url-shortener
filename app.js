@@ -2,6 +2,9 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const api = require("./api");
+const DataBase = require("./dataBase.js");
+app.use(express.json());
+app.use(express.urlencoded());
 //const shortUrl = require("dataBase.js");
 
 app.use(cors());
@@ -17,5 +20,9 @@ app.get("/", (req, res) => {
     res.status(404).send("page not found");
   }
 });
-
+app.get("/:id", async (request, response) => {
+  const { id } = request.params;
+  let originalUrl = await DataBase.findOriginalUrl(id);
+  response.redirect(`${originalUrl}`);
+});
 module.exports = app;

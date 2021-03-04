@@ -23,23 +23,23 @@ class DataBase {
     );
     this.items = JSON.parse(data);
   }
-
   static async addUrl(url) {
     await this.readAllData();
-
+    console.log("a");
     for (let item of this.items) {
+      console.log("c");
       if (item.originalUrl === url) {
+        console.log("b");
         return item.shortUrl;
       }
     }
-
     let newItem = new Item(url);
     this.items.push(newItem);
     fs.writeFile(
       "./dataBase/dataBase.json",
       JSON.stringify(this.items, null, 4)
     );
-
+    console.log("d");
     return newItem.shortUrl;
   }
   static deleteUrl(originalUrl) {
@@ -54,10 +54,12 @@ class DataBase {
     await this.readAllData();
 
     for (let item of this.items) {
-      if (item.shortUrl == shortUrl) {
+      if (item.shortUrl === shortUrl) {
         item.count += 1;
-        console.log("FIND ORIGINAL URL METHOD");
-        console.log(item.originalUrl);
+        fs.writeFile(
+          "./dataBase/dataBase.json",
+          JSON.stringify(this.items, null, 4)
+        );
         return item.originalUrl;
       }
     }
