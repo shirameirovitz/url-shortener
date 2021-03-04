@@ -33,9 +33,9 @@ describe("GET route", () => {
   ];
   it("should return a OriginalUrl by a short Id", async () => {
     const response = await request(app).get("/qj8VT-kKy");
-
     // is the status code 200
     expect(response.status).toBe(302);
+    expect(response.header.location).toBe(expectedItem[0].originalUrl);
   });
   it("should return an error with status 400 for not found id", async () => {
     const response = await request(app).get("/1111");
