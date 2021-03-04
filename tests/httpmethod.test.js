@@ -1,8 +1,8 @@
 const app = require("../app");
 const request = require("supertest");
 const fs = require("fs");
-const { items } = require("../dataBase");
 
+//TEST FOR POST
 describe("POST route", () => {
   it("should post a new short id successfully", async () => {
     const response = await request(app)
@@ -22,6 +22,7 @@ describe("POST route", () => {
   });
 });
 
+//TESTS FOR GET
 describe("GET route", () => {
   const expectedItem = [
     {
