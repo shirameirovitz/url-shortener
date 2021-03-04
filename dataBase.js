@@ -63,6 +63,7 @@ class DataBase {
         return item.originalUrl;
       }
     }
+    return false
   }
 }
 
