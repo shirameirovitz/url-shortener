@@ -27,8 +27,9 @@ router.post("/new", async (request, response) => {
 });
 
 router.get("/:id", async (request, response) => {
-  let originalUrl = await DataBase.findOriginalUrl(request.params.id);
-  response.redirect(originalUrl);
+  const { id } = request.params;
+  let originalUrl = await DataBase.findOriginalUrl(id);
+  response.redirect(`${originalUrl}`);
 });
 
 module.exports = { router };
