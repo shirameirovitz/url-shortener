@@ -20,6 +20,22 @@ describe("POST route", () => {
 
     expect(response.status).toBe(400);
   });
+  it("should return the same short url", async() =>{
+    const expectedItem = [
+      {
+        originalUrl: "shttps://github.com/",
+        shortUrl: "qj8VT-kKy",
+        count: 3,
+        date: "2021-03-04 10:08:17",
+      },
+    ];
+    const response = await request(app)
+    .post("/api/shorturl/new")
+    .type("form")
+    .send({url: "https://github.com/"});
+
+    expect(response.text).toEqual(`{\"message\":\"${expectedItem[0].shortUrl}\"}`);
+  })
 });
 
 //TESTS FOR GET
@@ -41,7 +57,7 @@ describe("GET route", () => {
   it("should return an error with status 400 for not found id", async () => {
     const response = await request(app).get("/1111");
 
-    //is the status 404
+    //is the status 400
     expect(response.status).toBe(400);
   });
   it("should return an error with status code 404 for not found main url", async () => {
