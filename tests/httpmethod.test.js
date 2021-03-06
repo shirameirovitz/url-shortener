@@ -20,7 +20,7 @@ describe("POST route", () => {
 
     expect(response.status).toBe(400);
   });
-  it("should return the same short url", async() =>{
+  it("should return the same short url", async () => {
     const expectedItem = [
       {
         originalUrl: "shttps://github.com/",
@@ -30,12 +30,14 @@ describe("POST route", () => {
       },
     ];
     const response = await request(app)
-    .post("/api/shorturl/new")
-    .type("form")
-    .send({url: "https://github.com/"});
+      .post("/api/shorturl/new")
+      .type("form")
+      .send({ url: "https://github.com/" });
 
-    expect(response.text).toEqual(`{\"message\":\"${expectedItem[0].shortUrl}\"}`);
-  })
+    expect(response.text).toEqual(
+      `Your new URL: localhost:3000/${expectedItem[0].shortUrl}`
+    );
+  });
 });
 
 //TESTS FOR GET
