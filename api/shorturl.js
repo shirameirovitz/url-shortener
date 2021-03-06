@@ -10,17 +10,15 @@ router.post("/new", async (request, response) => {
   const url = request.body.url;
 
   if (!validUrl.isUri(url)) {
-    response.status(400).json({
-      message: "Invalid URL. Please enter a valid url for shortening.",
-    });
+    response
+      .status(400)
+      .send("Invalid URL. Please enter a valid url for shortening.");
   } else {
     try {
       let shortUrl = await DataBase.addUrl(url);
-      response.status(200).json({ message: shortUrl });
+      response.status(200).send(`Your new URL: localhost:3000/${shortUrl}`);
     } catch (e) {
-      response
-        .status(500)
-        .json({ message: "Internal Server Error!", error: `${e}` });
+      response.status(500).send("Internal Server Error!"`${e}`);
     }
   }
 });

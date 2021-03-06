@@ -20,6 +20,22 @@ describe("POST route", () => {
 
     expect(response.status).toBe(400);
   });
+  it("should return the same short url", async () => {
+    const expectedItem = [
+      {
+        shortUrl: "aUDKRWvrA",
+        count: 0,
+        date: "2021-03-04 14:11:09",
+      },
+    ];
+    const response = await request(app)
+      .post("/api/shorturl/new")
+      .type("form")
+      .send({ url: "https://www.youtube.com/" });
+    expect(response.text).toEqual(
+      `Your new URL: localhost:3000/${expectedItem[0].shortUrl}`
+    );
+  });
 });
 
 //TESTS FOR GET
