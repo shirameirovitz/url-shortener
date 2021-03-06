@@ -1,0 +1,21 @@
+doctype html
+html(lang='en')
+  head
+    style.
+      table.ui.celled img { display: inline-block; }
+      footer { margin: 35px 0 15px 0; text-align: center }
+  body
+  h1 Urls Statistics
+      table
+          tr
+            th Original Url
+            th Short Url
+            th Count 
+            th Date 
+      
+          each url in urls 
+            tr
+              td= url.originalUrl
+              td= url.shortUrl
+              td= url.count
+              td= url.date
