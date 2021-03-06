@@ -5,14 +5,9 @@ const statistics = express.Router();
 statistics.use(express.json());
 statistics.use(express.urlencoded());
 
-//let table = document.querySelector("table");
-
 statistics.get("/", async (request, response) => {
   try {
     const url = await DataBase.readAllData();
-
-    console.log(url);
-
     response.render("statistics", { urls: url });
   } catch (e) {
     response
