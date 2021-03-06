@@ -8,6 +8,7 @@ statistics.use(express.urlencoded());
 statistics.get("/", async (request, response) => {
   try {
     const url = await DataBase.readAllData();
+    console.log(url);
     response.render("statistics", { urls: url });
   } catch (e) {
     response
