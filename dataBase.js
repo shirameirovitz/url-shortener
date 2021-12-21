@@ -22,10 +22,11 @@ class DataBase {
       }
     );
     this.items = JSON.parse(data);
+    return this.items;
   }
   static async addUrl(url) {
-    await this.readAllData();
-    for (let item of this.items) {
+    const items = await this.readAllData();
+    for (let item of items) {
       if (item.originalUrl === url) {
         return item.shortUrl;
       }
@@ -47,9 +48,9 @@ class DataBase {
   }
 
   static async findOriginalUrl(shortUrl) {
-    await this.readAllData();
+    const items = await this.readAllData();
 
-    for (let item of this.items) {
+    for (let item of items) {
       if (item.shortUrl === shortUrl) {
         item.count += 1;
         fs.writeFile(

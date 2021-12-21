@@ -17,13 +17,15 @@
             <label for="url_input">URL:</label>
             <input
               id="url_input"
-              type="url"
+              type="text"
               name="url"
               placeholder="https://www.freecodecamp.org/"
             />
             <input type="submit" value="POST URL" />
           </fieldset>
-          <button action="api/statistics/" method="POST">statistics</button>
+        </form>
+        <form action="api/statistics" method="GET">
+          <input type="submit" value="STATISTICS" />
         </form>
       </section>
     </main>
